@@ -1,0 +1,16 @@
+
+{% extends 'tasks/base.html' %}
+{% block none %}{% endblock %}
+{% block body %}
+{% if user.is_authenticated %}
+    <h2>Members in Team '{{ team.team_name }}'</h2><br>
+    <table class="col-lg-offset-1">
+    {% for member in members %}
+        <tr>
+            <td><h3>{{ forloop.counter }}.</h3></td>
+            <td><h3>{{ member.username }}</h3></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

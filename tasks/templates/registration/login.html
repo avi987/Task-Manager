@@ -1,0 +1,29 @@
+{% extends 'tasks/base.html' %}
+{% block logout %}{% endblock %}
+{% block body %}
+<br>
+<br><br>
+<br><br>
+<br>
+    <div class="col-lg-offset-3 col-sm-6 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+               <h3>New to the Website?</h3>
+                <h4>Then Sign Up Here</h4>
+                <a href="{% url 'tasks:register' %}"><button class="btn">SignUp</button> </a><br>
+                <h4>---------------------------OR--------------------------</h4>
+              {%  if error_message  %}
+                <p>{{ error_message }}</p>
+              {% endif %}
+                <h4>If You have registered already, Login here!</h4>
+              <form class="horizontal" action="" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {% include 'tasks/form_template.html' %}
+                  <div class="col-lg-offset-2">
+                      <button type="submit" class="btn btn-success">Login</button>
+                  </div>
+              </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

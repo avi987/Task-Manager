@@ -1,0 +1,57 @@
+{% extends 'tasks/base.html' %}
+{% block add %}Add Comment{% endblock %}
+{% block addhref %}{% url 'tasks:addcomment' task.task_team.id task.id %}{% endblock %}
+{% block body %}
+{% if user.is_authenticated %}
+<h1>Task "{{ task.task_title }}" Details:</h1>
+<div class="container col-lg-8 panel panel-default col-lg-offset-1">
+        <div class="panel-default">
+        <table class="table table-striped table-condensed">
+            <tbody><b>
+                <tr><td><b>Title: </b></td><td> {{ task.task_title }}</td></tr>
+                <tr><td><b>CreatedBy:</b></td><td> {{ task.createdBy }}</td></tr>
+                <tr><td><b>Status: </b></td><td>{{ task.task_status }}</td></tr>
+                <tr><td><b>AssignedTo: </b></td><td> {% for user in task.task_assignee.all %} {{user}}, {% endfor %}</td></tr>
+                <tr><td><b>Descriiption: </b></td><td>{{ task.task_description }}</td></tr>
+            <tr>
+                <td><b>Actions: </b></td><td><a href="{% url 'tasks:updatetask' task.task_team.id task.id%}">
+                       <button type="button" class="btn btn-default btn-sm">
+                           <span class="glyphicon glyphicon-edit"></span>
+                       </button>
+                    </a>
+                <form style="display: inline;" method="post" action="{% url 'tasks:deletetask' task.task_team.id task.id  %}">
+                    {% csrf_token %}
+                        <button type="submit" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </form>
+                </td>
+
+            </tr></b>
+            </tbody>
+        </table>
+        </div>
+    </div>
+<br>
+<div class="col-lg-10 "><h1>Comments:</h1></div>
+<div class="panel-default col-lg-10 col-lg-offset-1">
+            {% if comments %}
+        <table class="  table-condensed">
+            <tbody><b>
+                {% for comment in comments %}
+                    <tr>
+                        <td><h3><span class="glyphicon glyphicon-user"></span><b>{{ comment.commentedBy }}</b></h3></td>
+
+                    </tr>
+                <tr><td><h4>{{ comment.comment }}</h4></td></tr>
+                {% endfor %}
+            </b>
+            </tbody>
+        </table>
+            {% else %}
+            <h4><b>No comments to show</b></h4>
+            {% endif %}
+        </div>
+
+{% endif %}
+{% endblock %}

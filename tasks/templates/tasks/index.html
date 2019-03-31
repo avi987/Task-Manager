@@ -1,0 +1,84 @@
+
+
+{% extends 'tasks/base.html' %}
+{% block add %}Add Team{% endblock %}
+{% block addhref %}{% url 'tasks:addteam' %}{% endblock %}
+{% block body %}
+{% if user.is_authenticated %}
+<br>
+<div class="container-fluid">
+    {% if teams %}
+    <h2>{{ user.username }}'s Teams:</h2><br>
+    <div class="row">
+        {% for team in teams %}
+            {% ifequal forloop.counter 6 %}<div class="row">{% endifequal %}
+        <div class=" col-sm-2 col-md-2 col-lg-2 ">
+                    <div class="thumbnail">
+
+                        <div class="caption">
+                            <h2>    {{ team.team_name }}</h2>
+
+                            <a href="{% url 'tasks:team_details' team.id %}" class="btn btn-primary btn-sm" role="button">View Team</a>
+                            <a href="{% url 'tasks:team_members' team.id %}" class="btn btn-primary btn-sm" role="button">View Members</a>
+
+                        </div>
+                    </div>
+        {% ifequal forloop.counter 6 %}</div>{% endifequal %}
+        </div>
+        {% endfor %}
+    {% else %}
+        {% if not tasks %}<h2>No Teams to Show</h2>{% endif %}
+    {% endif %}
+    </div>
+{% if tasks %}
+<h1>Tasks:-</h1><br>
+<div class="container col-lg-8 panel panel-default col-lg-offset-1">
+        <div class="panel-default">
+        <table class="table table-striped table-condensed">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Task_Name</th>
+                <th>Team Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody><b>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ task.task_title }}</td>
+                <td>{{ task.task_team.team_name }}</td>
+                <td>{{ task.task_status }}</td>
+                <td>
+                    <a href="{% url 'tasks:task_details' task.task_team.id task.id %}">
+                       <button type="button" class="btn btn-success btn-xs">
+                           View
+                       </button>
+                    </a>
+                </td>
+                {% if task.createdBy == user %}
+                <td><a href="#">
+                       <button type="button" class="btn btn-default btn-sm">
+                           <span class="glyphicon glyphicon-edit"></span>
+                       </button>
+                    </a>
+                <form style="display: inline;" method="post" action="#>
+                    {% csrf_token %}
+                        <button type="submit" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody></b>
+        </table>
+        </div>
+    </div>
+{% endif %}
+
+{% endif %}
+{% endblock %}

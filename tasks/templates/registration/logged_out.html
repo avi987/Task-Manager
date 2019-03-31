@@ -1,0 +1,10 @@
+{% extends 'tasks/base.html' %}
+{% block logout %}{% endblock %}
+{% block body %}
+<br>
+<div class="col-lg-offset-4">
+    <h1>LOGGED OUT!</h1><BR>
+    <h2>Click Here to Log In Again</h2>
+    <a href="{% url 'tasks:login' %}"><button class="btn btn-lg">Login</button></a>
+</div>
+{% endblock %}
