@@ -8,6 +8,7 @@
 * Only the task creator can edit or delete the task
 * Any user in a team can view and comment on the tasks created in that team.
 * Authenticated userrs can search for their tasks and teams using a search box
+* New users can signup and registered users can login and logout of the webapp.
 
 ### **Run**
 intitialize the database with:-<br />
