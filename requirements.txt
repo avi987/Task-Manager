@@ -1,2 +1,0 @@
-Django==2.1a1
-django-braces==1.13.0
